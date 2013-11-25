@@ -21,7 +21,7 @@ VM = {
         userid: "",
         hash: window.location.hash
     },
-    api: "http://api.track-them-all.com/index.php/",
+    api: "http://api.track-them-all.com/",
     init: function() {
 
     }
