@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TrackThemAll | Group Management System</title>
+        <link href="css/application.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="img/favicon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .flex-video {
+                position: relative;
+                padding-top: 25px;
+                padding-bottom: 67.5%;
+                height: 0;
+                margin-bottom: 16px;
+                overflow: hidden;
+            }
+
+            .flex-video.widescreen { padding-bottom: 57.25%; }
+            .flex-video.vimeo { padding-top: 0; }
+
+            .flex-video iframe,
+            .flex-video object,
+            .flex-video embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            @media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
+                .flex-video { padding-top: 0; }
+            }
+        </style>
+    </head>
+    <body class="background landing">
+        <div class="container">
+            <header class="page-header">
+                <div class="navbar">
+                    <div class="logo pull-left">
+                        <h4><a href="index.html">Track<strong>Them</strong>All</a> <small>Simple Group Management System</small></h4>
+                    </div>
+                    <ul class="nav navbar-nav pull-right navbar-menu hidden-xs">
+                        <li class="active">
+                            <a href="#">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#features">
+                                Features
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-buttons pull-right">
+                        <li>
+                            <a href="login.php" class="btn btn-sm btn-transparent">
+                                Demo&nbsp;
+                                <i class="icon-lightbulb"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="login.php"
+                               class="btn btn-sm btn-transparent">
+                                Login&nbsp;
+                                <i class="icon-user-md"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="content">
+                <div id="carousel-landing" class="carousel slide carousel-landing carousel-fade">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-landing" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-landing" data-slide-to="1" class=""></li>
+                        <li data-target="#carousel-landing" data-slide-to="2" class=""></li>
+                        <li data-target="#carousel-landing" data-slide-to="3" class=""></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="animated fadeInLeftBig">
+                                        <h1 class="slidNowe-one-header"><strong>TrackThemAll</strong> <br>Group Management System</h1>
+                                        <p class="lead hidden-xs">
+                                            Keep track of people with <strong>mobile phones</strong>
+                                        </p>
+                                        <p>
+                                            <a href="login.php" class="btn btn-lg btn-white">
+                                                Preview &nbsp; <i class="icon-angle-right"></i>
+                                            </a>
+                                            <a href="login.php"
+                                               class="btn btn-lg btn-transparent">
+                                                Register &nbsp; <i class="icon-user"></i>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="text-align-center animated fadeInRightBig">
+                                        <img src="img/jpeg/light-blue-preview-1.png" alt="Layout demo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<!--                        <div class="item">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="animated fadeInDown">
+                                        <h1 class="slide-three-header">
+                                            <strong>Business</strong>
+                                            <br>
+                                            Ready
+                                        </h1>
+                                        <p class="lead">
+                                            Do you have <strong>Sales Reps</strong>, <strong>Delivery Guys</strong><br>
+                                            or <strong>Drivers</strong> in your company?<br>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <p class="animated slideInRight flex-video">
+                                        <iframe  src="//www.youtube.com/embed/TsJIroRd0Nk?rel=0&color=white" frameborder="0" allowfullscreen></iframe>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="item">
+                            <h1 class="slide-two-header text-align-center animated fadeInDown">
+                                <strong>Locate</strong> & <strong>Contact</strong>
+
+                            </h1>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="animated fadeInLeftBig">
+                                        <p class="row">
+                                            <a href="#" class="col-md-6 col-md-offset-3">
+                                                <img src="img/jpeg/locate.png" alt=""/>
+                                            </a>
+                                        </p>
+                                        <h3 class="text-align-center">
+                                            Locate the subscriber <strong>On Demand!</strong> or in every <strong>15 minutes</strong>.
+                                        </h3>>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="animated fadeInRightBig">
+                                        <p class="row">
+                                            <a href="#"  class="col-md-6 col-md-offset-3">
+                                                <img src="img/jpeg/sms.png" alt=""/>
+                                            </a>
+                                        </p>
+                                        <h3 class="text-align-center">
+                                            Send <strong>SMS</strong> to them and they can send <strong>SMS</strong> back to you or to the group <strong>FREE!</strong>
+                                        </h3>>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="animated fadeInLeft">
+                                        <h1 class="slide-three-header">
+                                            <strong>Fully</strong>
+                                            <br>
+                                            Responsive
+                                        </h1>
+                                        <p class="lead">
+                                            Administration panel works on any <strong>mobile device</strong>.
+                                            <a href="http://responsinator.com/?url=http%3A%2F%2Ftta.ideawide.com" class="btn btn-white btn-lg" target="_blank">
+                                                Test It
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <p class="animated fadeInUp" style="margin-top: 20px">
+                                        <img src="img/jpeg/light-blue-phone.png" alt=""/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="left carousel-control" href="#carousel-landing" data-slide="prev">
+                        <span class="icon-prev"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-landing" data-slide="next">
+                        <span class="icon-next"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="features" class="widget widget-white widget-about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <h2>Why <strong>TrackThemAll</strong>?</h2>
+                        <div class="row features">
+                            <div class="col-sm-4">
+                                <section class="feature">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <p>
+                                                <span class="icon background-danger">
+                                                    <i class="icon-mobile-phone"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h4>Any phone</h4>
+                                            <p>
+                                                Not just the smart phones. As long as the device is <i>switched on</i>, you can track them.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-sm-4">
+                                <section class="feature">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <p>
+                                                <span class="icon background-warning">
+                                                    <i class="icon-envelope"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h4>Free SMS</h4>
+                                            <p>
+                                                Messages sent through the system to groups are <i>completely free</i>. No extra charge.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-sm-4">
+                                <section class="feature">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <p>
+                                                <span class="icon background-success">
+                                                    <i class="icon-html5"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h4>Track on the move</h4>
+                                            <p>
+                                                Administration panel works on any smart phone with a <i>web browser</i>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="row features">
+                            <div class="col-sm-4">
+                                <section class="feature">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <p>
+                                                <span class="icon background-primary">
+                                                    <i class="icon-group"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h4>Pay as you go</h4>
+                                            <p>
+                                                Pay only for the subscribers. Only <i>Rs. 30</i> per subscriber per month. No extra <i>cost</i>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-sm-4">
+                                <section class="feature">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <p>
+                                                <span class="icon background-lime">
+                                                    <i class="icon-map-marker"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h4>Locate real time</h4>
+                                            <p>
+                                                Location of every subscriber is updated every <i>15 minutes</i>. Administrators can check <i>on demand</i> as well.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-sm-4">
+                                <section class="feature">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <p>
+                                                <span class="icon background-info">
+                                                    <i class="icon-wrench"></i>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h4>Simple setup</h4>
+                                            <p>
+                                                Nothing to configure. Add groups. Ask subscribers to register. Track Them.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="preview text-align-center">
+                    <a href="login.php" class="btn btn-lg btn-danger">
+                        &nbsp; Register Free! &nbsp;
+                    </a>
+                </p>
+            </div>
+        </div>
+    <h2 class="thanks text-align-center">Find us on</h2>
+    <div class="text-align-center">
+        <a href="https://www.facebook.com/trackthemall" class="badge background-primary"><i class="icon-facebook-sign icon-3x"> </i></a>
+        <a href="#" class="badge badge-success"><i class="icon-google-plus-sign icon-3x"> </i></a>
+        <a href="http://twitter.com/trackthemall" class="badge background-info"><i class="icon-twitter-sign icon-3x"> </i></a>
+    </div>
+    <hr>
+    <h4 class="text-align-center">© 2013 <a href="http://ideawide.com" title="Width of Ideas">Ideawide.com</a> | all rights reserved | <a href="#top" title="Got to top" class="scroll">To top <i class="icon-caret-up"></i></a></h4>
+    <!-- jquery and friends -->
+    <script src="lib/jquery/jquery.1.9.0.min.js"></script>
+
+    <!-- bootstrap default plugins -->
+    <script src="lib/bootstrap/transition.js"></script>
+    <script src="lib/bootstrap/carousel.js"></script>
+
+    <!-- page specific -->
+    <script src="js/landing.js"></script>
+
+
+</body>

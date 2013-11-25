@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TrackThemAll | Dashboard</title>
+        <link href="css/application.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="img/favicon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="TrackThemAll is a group management system. Registered users can be tracked live and communicate with them over SMS.">
+        <meta name="author" content="Pasindu Perera">
+        <meta property="og:site_name" content="TrackThemAll">
+        <meta property="og:image" content="http://tta.ideawide.com/logo.png">
+        <meta property="og:title" content="TrackThemAll | Track your employees, subodinates, children ..">
+        <meta property="og:url" content="http://tta.ideawide.com">
+        <meta property="og:description" content="TrackThemAll is a group management system. Registered users can be tracked live and communicate with them over SMS. To reg send REG TTA to 77100 from Dialog Mobile">
+        <meta charset="utf-8">
+
+        <script>
+            // Include the UserVoice JavaScript SDK (only needed once on a page)
+            UserVoice = window.UserVoice || [];
+            (function() {
+                var uv = document.createElement('script');
+                uv.type = 'text/javascript';
+                uv.async = true;
+                uv.src = '//widget.uservoice.com/auQUiKbFh1RQP0D0BhssJQ.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(uv, s)
+            })();
+
+            //
+            // UserVoice Javascript SDK developer documentation:
+            // https://www.uservoice.com/o/javascript-sdk
+            //
+
+            // Set colors
+            UserVoice.push(['set', {
+                    accent_color: '#448dd6',
+                    trigger_color: 'white',
+                    trigger_background_color: 'rgba(46, 49, 51, 0.6)'
+                }]);
+
+            // Add default trigger to the bottom-right corner of the window:
+            UserVoice.push(['addTrigger', {mode: 'contact', trigger_position: 'bottom-right'}]);
+
+            // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+            UserVoice.push(['autoprompt', {}]);
+        </script>
+    </head>
+    <body class="background-dark">
+        <div class="logo">
+            <h4><a href="dashboard.html#">TrackThem<strong>All</strong></a></h4>
+        </div>
+        <nav id="sidebar" class="sidebar nav-collapse collapse">
+            <ul id="side-nav" class="side-nav">
+                <li>
+                    <a href="dashboard.html"><i class="icon-home"></i> <span class="name">Welcome</span></a>
+                </li>
+                <li>
+                    <a href="groups.html"><i class="icon-group"></i> <span class="name">Groups</span></a>
+                </li>
+                <li>
+                    <a href="subscribers.html"><i class="icon-user"></i> <span class="name">Subscribers</span></a>
+                </li>
+                <li class="visible-xs">
+                    <a href="http://localhost/host/TTT/TrackThemAll-web/signout.php"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
+                </li>
+            </ul>
+            <div id="sidebar-settings" class="settings">
+                <button type="button"
+                        data-value="icons"
+                        class="btn-icons btn btn-transparent btn-sm">Icons</button>
+                <button type="button"
+                        data-value="auto"
+                        class="btn-auto btn btn-transparent btn-sm">Auto</button>
+            </div>
+        </nav>
+        <div class="wrap">
+            <header class="page-header">
+                <div class="navbar">
+                    <ul class="nav navbar-nav navbar-right pull-right">
+                        <li class="dropdown">
+                            <a href="dashboard.html#" title="Messages" id="messages"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                <i class="icon-comments"></i>
+                                <span class="count" data-bind="text:messages.list().length"></span>
+                            </a>
+                            <ul id="messages-menu" class="dropdown-menu messages" role="menu">
+                                <!-- ko foreach:messages.list-->
+                                <li role="presentation">
+                                    <a href="dashboard.html#" data-bind="attr:{href: 'group.php#'+group.hash}" class="message">
+                                        <img src="img/blank-user.png" alt="">
+                                        <div class="details">
+                                            <div class="sender" data-bind="text:name"></div>
+                                            <div class="text" data-bind="text:message">
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- /ko -->
+                                <!--                            <li role="presentation">
+                                                                <a href="messages.html" class="text-align-center see-all">
+                                                                    See all messages <i class="icon-arrow-right"></i>
+                                                                </a>
+                                                            </li>-->
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="dashboard.html#" title="Notifcations"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                <i class="icon-group"></i>
+                                <span class="count" data-bind="text:notifications.list().length"></span>
+                            </a>
+                            <ul id="support-menu" class="dropdown-menu support" role="menu" data-bind="foreach:notifications.list">
+                                <li role="presentation">
+                                    <a href="dashboard.html#" class="support-ticket">
+                                        <!-- ko if:type=='sub' -->
+                                        <div class="picture">
+                                            <span class="label label-success"><i class="icon-user-md"></i></span>
+                                        </div>
+                                        <!-- /ko -->
+                                        <!-- ko if:type=='user' -->
+                                        <div class="picture">
+                                            <span class="label label-important"><i class="icon-user"></i></span>
+                                        </div>
+                                        <!-- /ko -->
+                                        <!-- ko if:type=='group' -->
+                                        <div class="picture">
+                                            <span class="label label-info"><i class="icon-group"></i></span>
+                                        </div>
+                                        <!-- /ko -->
+                                        <div class="details" data-bind="text:content"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="hidden-xs">
+                            <a href="dashboard.html#" id="settings"
+                               title="Settings"
+                               data-toggle="popover"
+                               data-placement="bottom">
+                                <i class="icon-cog"></i>
+                            </a>
+                        </li>
+                        <li class="hidden-xs dropdown">
+                            <a href="dashboard.html#" title="Account" id="account"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                <i class="icon-user"></i>
+                            </a>
+                            <ul id="account-menu" class="dropdown-menu account" role="menu">
+                                <li role="presentation" class="account-picture">
+                                    <img src="img/blank-user.png" alt="">
+                                    <span data-bind="text:session.username"></span>
+                                </li>
+                                <li role="presentation">
+                                    <a href="dashboard.html#" class="link">
+                                        <i class="icon-user"></i>
+                                        Profile
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="visible-xs">
+                            <a href="dashboard.html#"
+                               class="btn-navbar"
+                               data-toggle="collapse"
+                               data-target=".sidebar"
+                               title="">
+                                <i class="icon-reorder"></i>
+                            </a>
+                        </li>
+                        <li class="hidden-xs"><a href="dashboard.html#"><i class="icon-signout"></i></a></li>
+                    </ul>
+                </div>
+            </header>
+            <div class="content container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="page-title"><span data-bind="text:page.pageName"></span> <small data-bind="text:page.description"></small></h2>
+                    </div>
+                </div><div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <section class="widget">
+                            <!--            <header>
+                                            <h4>
+                                                Welcome to TrackThemAll
+                                            </h4>
+                                        </header>-->
+                            <div class="body">
+                                <p class="lead text-align-center">Welcome to TrackThemAll</p>
+                                <div class="alert alert-info text-align-center">TrackThemAll is currently public beta. Please provide your ideas and feedback.</div>
+                                <div class="row text-align-center">
+                                    <div class="col-md-4">
+                                        <i class="icon-5x icon-time"></i>
+                                        <h3><a href="dashboard.html#" data-toggle="modal" data-target="#quickguide">Quick Guide <small>(3 minutes)</small></a></h3>
+                                        <p>Get you started with TrackThemAll and its functionality.</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <i class="icon-5x icon-question"></i>
+                                        <h3><a hred="#" data-toggle="modal" data-target="#faq" >Frequently Asked Questions</a></h3>
+                                        <p>Have a common question?</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <i class="icon-5x eicon-doc-text"></i>
+                                        <h3><a hred="#" data-toggle="modal" data-target="#doc" >Full Documentation</a></h3>
+                                        <p>How things works and what are the limitations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div id="quickguide" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="quickGuide" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Quick Guide</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p class="lead">Welcome to the Quick guide!</p>
+                                <p>Follow the simple steps bellow and start using TrackThemAll.</p>
+                                <dl>
+                                    <dt>1. Get Register and login with TrackThemAll</dt>
+                                    <dd>Go to <a href="http://tta.ideawide.com">http://tta.ideawide.com</a> and click sign up to register a new account. Which you would have done by now.</dd>
+                                    <hr>
+                                    <dt>2. Add a group</dt>
+                                    <dd>Click on <i>groups</i> from the menu to the left and click <i>Add</i> a group.
+                                        <p class="text-warning">Group hash should be unique and cannot be changed afterwards.</p></dd>
+                                    <hr>
+                                    <dt>3. Register Subscribers</dt>
+                                    <dd>From the subscribers mobile phone send the following messages to <i>77100</i>.<br>
+                                        <code>REG TTA</code>  :  <span class="text-success">registration to TrackThemAll</span><br>
+                                        <code>TTA REG {grouphash}</code>  :  <span class="text-success">registration to the group created above</span><br>
+                                        optionally, <br>
+                                        <code>TTA name {subscriber name}</code>  :  <span class="text-success">adding a custom name to identify the subscriber.</span><br>
+                                        <p class="text-info">All the above messages are case insensitive.</p></dd>
+                                    <hr>
+                                    </dd>
+                                    <dt>4. Track Subscribers</dt>
+                                    <dd>Go to <i>Subscribers</i> page from the menu to the left. Click on a subscriber shown in the list.</dd>
+                                    </dd>
+                                </dl>
+                                <p class="text-primary">Thats All!! Track them All!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="faq" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="quickGuide" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Frequently Asked Questions</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="http://localhost/host/TTT/TrackThemAll-web/ui_accordion.html#collapseOne">
+                                                What is TTT?
+                                            </a>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse" style="height: auto;">
+                                            <div class="panel-body">
+                                                <strong>TrackThemAll</strong> is a group management system. Users can create groups and mobile subscribers can subscribe to those groups.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="http://localhost/host/TTT/TrackThemAll-web/ui_accordion.html#collapseTwo">
+                                                What can it do?
+                                            </a>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <h4>Web Users</h4>
+                                                <p>Once the subscribers register to groups, users can Track the location of those members. Send SMSs. View the track of the each subscriber and much more. </p>
+                                                <h4>Mobile Subscribers</h4>
+                                                <p><i>Mobile subscribers</i> can subscribe to groups created by <i>web users</i>, send public messages to the group or private messages to admins. They can turn off location sharing.(but will be notified to group admins)</p>
+                                                <p class="alert-warning alert">Click on the right panels to see the functionality</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="http://localhost/host/TTT/TrackThemAll-web/ui_accordion.html#collapse4">
+                                                More Questions?
+                                            </a>
+                                        </div>
+                                        <div id="collapse4" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <p>Click the support button on the right bottom corner and submit your question.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="http://localhost/host/TTT/TrackThemAll-web/ui_accordion.html#collapse7">
+                                                Like to join with us?
+                                            </a>
+                                        </div>
+                                        <div id="collapse7" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <p>Please send an email to <a href="mailto:tta@ideawide.com?subject=Join TTT&body=I would like to join TTT because ">tta@ideawide.com</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="doc" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="quickGuide" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Fully Documentation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-warning">This will be added very soon.</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jquery and friends -->
+        <script src="lib/jquery/jquery.1.9.0.min.js"></script>
+        <script src="lib/jquery/jquery-migrate-1.1.0.min.js"></script>
+
+        <!-- jquery plugins -->
+        <script src="lib/icheck.js/jquery.icheck.js"></script>
+        <script src="lib/sparkline/jquery.sparkline.js"></script>
+        <script src="lib/jquery-ui-1.10.1.custom.js"></script>
+        <script src="lib/jquery.slimscroll.js"></script>
+        <script src="lib/pnotify/jquery.pnotify.js"></script>
+
+
+        <!--backbone and friends -->
+        <script src="lib/backbone/underscore-min.js"></script>
+
+        <!-- bootstrap default plugins -->
+        <script src="lib/bootstrap/transition.js"></script>
+        <script src="lib/bootstrap/collapse.js"></script>
+        <script src="lib/bootstrap/alert.js"></script>
+        <script src="lib/bootstrap/modal.js"></script>
+        <script src="lib/bootstrap/tooltip.js"></script>
+        <script src="lib/bootstrap/popover.js"></script>
+        <script src="lib/bootstrap/button.js"></script>
+        <script src="lib/bootstrap/tab.js"></script>
+        <script src="lib/bootstrap/dropdown.js"></script>
+
+
+        <script src="js/app.js"></script>
+        <script src="js/settings.js"></script>
+
+
+        <!-- page specific -->
+        <script src="js/ko.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/page/Dashboard.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                VM.init();
+                VM.common();
+                ko.applyBindings(VM);
+                $($("#side-nav li")[VM.page.menuIndex]).toggleClass('active');
+            });
+
+        </script>
+
+
+        <script type="text/template" id="settings-template">
+            <div class="setting clearfix">
+            <div>Background</div>
+            <div id="background-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+            <% dark = background == 'dark'; light = background == 'light';%>
+            <button type="button" data-value="dark" class="btn btn-sm btn-transparent <%= dark? 'active' : '' %>">Dark</button>
+            <button type="button" data-value="light" class="btn btn-sm btn-transparent <%= light? 'active' : '' %>">Light</button>
+            </div>
+            </div>
+            <div class="setting clearfix">
+            <div>Sidebar on the</div>
+            <div id="sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+            <% onRight = sidebar == 'right'%>
+            <button type="button" data-value="left" class="btn btn-sm btn-transparent <%= onRight? '' : 'active' %>">Left</button>
+            <button type="button" data-value="right" class="btn btn-sm btn-transparent <%= onRight? 'active' : '' %>">Right</button>
+            </div>
+            </div>
+            <div class="setting clearfix">
+            <div>Sidebar</div>
+            <div id="display-sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+            <% display = displaySidebar%>
+            <button type="button" data-value="true" class="btn btn-sm btn-transparent <%= display? 'active' : '' %>">Show</button>
+            <button type="button" data-value="false" class="btn btn-sm btn-transparent <%= display? '' : 'active' %>">Hide</button>
+            </div>
+            </div>
+        </script>
+
+        <script type="text/template" id="sidebar-settings-template">
+            <% auto = sidebarState == 'auto'%>
+            <% if (auto) {%>
+            <button type="button"
+            data-value="icons"
+            class="btn-icons btn btn-transparent btn-sm">Icons</button>
+            <button type="button"
+            data-value="auto"
+            class="btn-auto btn btn-transparent btn-sm">Auto</button>
+            <%} else {%>
+            <button type="button"
+            data-value="auto"
+            class="btn btn-transparent btn-sm">Auto</button>
+            <% } %>
+        </script>
+
+        <!-- Histats.com  START (hidden counter)-->
+        <script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
+        <a href="http://www.histats.com" target="_blank" title="statistics" ><script  type="text/javascript" >
+            try {
+                Histats.start(1, 2507491, 4, 0, 0, 0, "");
+                Histats.track_hits();
+            } catch (err) {
+            }
+            ;
+            </script></a>
+        <noscript><a href="http://www.histats.com" target="_blank"><img  src="http://sstatic1.histats.com/0.gif?2507491&101" alt="statistics" border="0"></a></noscript>
+        <!-- Histats.com  END  -->
+    </body>
+</html>

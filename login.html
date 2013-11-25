@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TrackThemAll | Login</title>
+        <link href="css/application.min.css" rel="stylesheet">
+        <link rel="shortcut icon" href="img/favicon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="TrackThemAll is a group management system. Registered users can be tracked live and communicate with them over SMS.">
+<meta name="author" content="Pasindu Perera">
+<meta property="og:site_name" content="TrackThemAll"/>
+<meta property="og:image" content="http://tta.ideawide.com/logo.png"/>
+<meta property="og:title" content="TrackThemAll | Track your employees, subodinates, children .."/>
+<meta property="og:url" content="http://tta.ideawide.com"/>
+<meta property="og:description" content="TrackThemAll is a group management system. Registered users can be tracked live and communicate with them over SMS. To reg send REG TTA to 77100 from Dialog Mobile"/>
+<meta charset="utf-8">
+
+<script>
+// Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/auQUiKbFh1RQP0D0BhssJQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+//
+// UserVoice Javascript SDK developer documentation:
+// https://www.uservoice.com/o/javascript-sdk
+//
+
+// Set colors
+UserVoice.push(['set', {
+  accent_color: '#448dd6',
+  trigger_color: 'white',
+  trigger_background_color: 'rgba(46, 49, 51, 0.6)'
+}]);
+
+// Add default trigger to the bottom-right corner of the window:
+UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+
+// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
+</script>
+        <script src="lib/jquery/jquery.1.9.0.min.js"></script>
+        <script src="lib/backbone/underscore-min.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/ko.js"></script>
+        <script src="js/main.js"></script>
+        <script src="lib/pnotify/jquery.pnotify.js"></script>
+    </head>
+    <body>
+        <div class="single-widget-container">
+            <section class="widget login-widget">
+                <header class="text-align-center">
+                    <h4 data-bind="text:greet">Login to your account</h4>
+                </header>
+                <div class="body">
+                    <div class="alert-danger alert text-align-center">
+                        To check a demo, use the following details. <br>
+                        Username : demo  Password : demo
+                    </div>
+                    <form class="no-margin">
+                        <fieldset>
+                            <div class="form-group no-margin" data-bind="visible:isSignUp">
+                                <label >Full Name</label>
+
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">
+                                        <i class="eicon-vcard"></i>
+                                    </span>
+                                    <input data-bind="value:name" type="email" class="form-control input-lg"
+                                           placeholder="Your Name">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group no-margin">
+                                <label for="email">Username/Email</label>
+
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">
+                                        <i class="eicon-user"></i>
+                                    </span>
+                                    <input id="email" data-bind="value:email" type="email" class="form-control input-lg"
+                                           placeholder="Your Email">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon">
+                                        <i class="icon-lock"></i>
+                                    </span>
+                                    <input id="password" data-bind="value:password" type="password" class="form-control input-lg"
+                                           placeholder="Your Password">
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        <div class="form-actions">
+                            <button id="login" type="submit" data-bind="click:login" class="btn btn-block btn-lg btn-success">
+                                <span class="small-circle"><i class="icon-caret-right"></i></span>
+                                <small>Sign In</small>
+                            </button>
+                            <button type="submit" data-bind="click:signup" class="btn btn-block btn-lg btn-info">
+                                <span class="small-circle"><i class="icon-user"></i></span>
+                                <small>Sign up</small>
+                            </button>
+                            <div class="forgot"><a class="forgot" href="login.html#">Forgot Username or Password?</a></div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <script type="text/javascript">
+            VM.login = {
+                email: ko.observable(""),
+                name: ko.observable(""),
+                password: ko.observable(""),
+                login: function() {
+                    VM.login.alert("");
+                    VM.post("users/login", {
+                        email: VM.login.email(),
+                        password: VM.login.password(),
+                    }, function(data) {
+                        window.location = 'dashboard.html';
+                    });
+                    return false;
+                },
+                signup: function() {
+                    VM.login.alert("");
+                    if (VM.login.isSignUp()) {
+                        VM.post('users', {
+                            email: VM.login.email(),
+                            password: VM.login.password(),
+                            name: VM.login.name(),
+                        }, function(data) {
+                            VM.notify({
+                                title: "Registration Successful",
+                                text: "Click Login button to login to your account"
+                            })
+                        });
+                    } else {
+                        VM.login.isSignUp(true);
+                        VM.login.greet("Register a new account");
+                    }
+                    return false;
+                },
+                greet: ko.observable("Login to your account"),
+                isSignUp: ko.observable(false),
+                alert: ko.observable(""),
+            };
+            ko.applyBindings(VM.login);
+        </script>
+    </body>
+</html>

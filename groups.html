@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TrackThemAll | Groups</title>
+    <link href="css/application.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TrackThemAll is a group management system. Registered users can be tracked live and communicate with them over SMS.">
+<meta name="author" content="Pasindu Perera">
+<meta property="og:site_name" content="TrackThemAll"/>
+<meta property="og:image" content="http://tta.ideawide.com/logo.png"/>
+<meta property="og:title" content="TrackThemAll | Track your employees, subodinates, children .."/>
+<meta property="og:url" content="http://tta.ideawide.com"/>
+<meta property="og:description" content="TrackThemAll is a group management system. Registered users can be tracked live and communicate with them over SMS. To reg send REG TTA to 77100 from Dialog Mobile"/>
+<meta charset="utf-8">
+
+<script>
+// Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/auQUiKbFh1RQP0D0BhssJQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+//
+// UserVoice Javascript SDK developer documentation:
+// https://www.uservoice.com/o/javascript-sdk
+//
+
+// Set colors
+UserVoice.push(['set', {
+  accent_color: '#448dd6',
+  trigger_color: 'white',
+  trigger_background_color: 'rgba(46, 49, 51, 0.6)'
+}]);
+
+// Add default trigger to the bottom-right corner of the window:
+UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+
+// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
+</script>
+</head>
+<body class="background-dark">
+<div class="logo">
+    <h4><a href="groups.html#">TrackThem<strong>All</strong></a></h4>
+</div>
+<nav id="sidebar" class="sidebar nav-collapse collapse">
+    <ul id="side-nav" class="side-nav">
+        <li>
+            <a href="dashboard.html"><i class="icon-home"></i> <span class="name">Welcome</span></a>
+        </li>
+        <li>
+            <a href="groups.html"><i class="icon-group"></i> <span class="name">Groups</span></a>
+        </li>
+        <li>
+            <a href="subscribers.html"><i class="icon-user"></i> <span class="name">Subscribers</span></a>
+        </li>
+        <li class="visible-xs">
+            <a href="http://localhost/host/TTT/TrackThemAll-web/signout.php"><i class="icon-signout"></i> <span class="name">Sign Out</span></a>
+        </li>
+    </ul>
+    <div id="sidebar-settings" class="settings">
+        <button type="button"
+                data-value="icons"
+                class="btn-icons btn btn-transparent btn-sm">Icons</button>
+        <button type="button"
+                data-value="auto"
+                class="btn-auto btn btn-transparent btn-sm">Auto</button>
+    </div>
+</nav>
+<div class="wrap">
+    <header class="page-header">
+        <div class="navbar">
+                <ul class="nav navbar-nav navbar-right pull-right">
+                    <li class="dropdown">
+                        <a href="groups.html#" title="Messages" id="messages"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown">
+                            <i class="icon-comments"></i>
+                            <span class="count" data-bind="text:messages.list().length"></span>
+                        </a>
+                        <ul id="messages-menu" class="dropdown-menu messages" role="menu">
+                            <!-- ko foreach:messages.list-->
+                            <li role="presentation">
+                                <a href="groups.html#" data-bind="attr:{href: 'group.php#'+group.hash}" class="message">
+                                    <img src="img/blank-user.png" alt="">
+                                    <div class="details">
+                                        <div class="sender" data-bind="text:name"></div>
+                                        <div class="text" data-bind="text:message">
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <!-- /ko -->
+<!--                            <li role="presentation">
+                                <a href="messages.html" class="text-align-center see-all">
+                                    See all messages <i class="icon-arrow-right"></i>
+                                </a>
+                            </li>-->
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="groups.html#" title="Notifcations"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown">
+                            <i class="icon-group"></i>
+                            <span class="count" data-bind="text:notifications.list().length"></span>
+                        </a>
+                        <ul id="support-menu" class="dropdown-menu support" role="menu" data-bind="foreach:notifications.list">
+                            <li role="presentation">
+                                <a href="groups.html#" class="support-ticket">
+                                    <!-- ko if:type=='sub' -->
+                                    <div class="picture">
+                                        <span class="label label-success"><i class="icon-user-md"></i></span>
+                                    </div>
+                                    <!-- /ko -->
+                                     <!-- ko if:type=='user' -->
+                                    <div class="picture">
+                                        <span class="label label-important"><i class="icon-user"></i></span>
+                                    </div>
+                                    <!-- /ko -->
+                                    <!-- ko if:type=='group' -->
+                                    <div class="picture">
+                                        <span class="label label-info"><i class="icon-group"></i></span>
+                                    </div>
+                                    <!-- /ko -->
+                                    <div class="details" data-bind="text:content"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="hidden-xs">
+                        <a href="groups.html#" id="settings"
+                           title="Settings"
+                           data-toggle="popover"
+                           data-placement="bottom">
+                            <i class="icon-cog"></i>
+                        </a>
+                    </li>
+                    <li class="hidden-xs dropdown">
+                        <a href="groups.html#" title="Account" id="account"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown">
+                            <i class="icon-user"></i>
+                        </a>
+                        <ul id="account-menu" class="dropdown-menu account" role="menu">
+                            <li role="presentation" class="account-picture">
+                                <img src="img/blank-user.png" alt="">
+                                <span data-bind="text:session.username"></span>
+                            </li>
+                            <li role="presentation">
+                                <a href="groups.html#" class="link">
+                                    <i class="icon-user"></i>
+                                    Profile
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="visible-xs">
+                        <a href="groups.html#"
+                           class="btn-navbar"
+                           data-toggle="collapse"
+                           data-target=".sidebar"
+                           title="">
+                            <i class="icon-reorder"></i>
+                        </a>
+                    </li>
+                    <li class="hidden-xs"><a href="groups.html#"><i class="icon-signout"></i></a></li>
+                </ul>
+        </div>
+    </header>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="page-title"><span data-bind="text:page.pageName"></span> <small data-bind="text:page.description"></small></h2>
+            </div>
+        </div><div class="row">
+    <div class="widget" data-bind="with:group">
+        <header>
+            <h4>
+                <i class="eicon-chat"></i>
+                Groups
+                <small>
+                    Registered Groups
+                </small>
+            </h4>
+            <div class="actions">
+                <a href='groups.html#'class="btn btn-info" data-toggle="modal" data-target="#addGroup"><i class="icon-plus"></i> Add</a>
+                <a href='groups.html#'class="btn btn-success" data-bind="click:update"><i class="icon-refresh"></i> Refresh</a>
+            </div>
+        </header>
+        <div class="body">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Owner</th>
+                        <th>hash</th>
+                        <th>Subscriber Count</th>
+                        <th>Registered on</th>
+                        <th>Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody data-bind='foreach:list'>
+                    <tr>
+                        <td>
+                            <a href='groups.html#' data-bind="attr:{href:'group.php#'+hash}, text:name"></a>
+                        </td>
+                        <td data-bind='text:owner'></td>
+                        <td data-bind='text:hash'></td>
+                        <td data-bind='text:subCount'></td>
+                        <td data-bind='text:registered'></td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-sm" data-placement="top" data-original-title="Remove group" >
+                                <i class="icon-remove"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="addGroup" class="modal fade" data-bind ="with:group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Add Group</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" _lpchecked="1">
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="name">Name</label>
+                            <div class="controls form-group">
+                                <div class="col-sm-8">
+                                    <input type="text" id="name" class="form-control" placeholder="Name of the group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="name">Hash</label>
+                            <div class="controls form-group">
+                                <div class="col-sm-8">
+                                    <input type="text" id="hash" class="form-control" placeholder="Name of the group">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click:addGroup">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<!-- jquery and friends -->
+<script src="lib/jquery/jquery.1.9.0.min.js"> </script>
+<script src="lib/jquery/jquery-migrate-1.1.0.min.js"> </script>
+
+<!-- jquery plugins -->
+<script src="lib/icheck.js/jquery.icheck.js"></script>
+<script src="lib/sparkline/jquery.sparkline.js"></script>
+<script src="lib/jquery-ui-1.10.1.custom.js"></script>
+<script src="lib/jquery.slimscroll.js"></script>
+<script src="lib/pnotify/jquery.pnotify.js"></script>
+
+
+<!--backbone and friends -->
+<script src="lib/backbone/underscore-min.js"></script>
+
+<!-- bootstrap default plugins -->
+<script src="lib/bootstrap/transition.js"></script>
+<script src="lib/bootstrap/collapse.js"></script>
+<script src="lib/bootstrap/alert.js"></script>
+<script src="lib/bootstrap/modal.js"></script>
+<script src="lib/bootstrap/tooltip.js"></script>
+<script src="lib/bootstrap/popover.js"></script>
+<script src="lib/bootstrap/button.js"></script>
+<script src="lib/bootstrap/tab.js"> </script>
+<script src="lib/bootstrap/dropdown.js"></script>
+
+
+<script src="js/app.js"></script>
+<script src="js/settings.js"></script>
+
+
+<!-- page specific -->
+<script src="js/ko.js"></script>
+<script src="js/main.js"></script>
+<script src="js/page/Groups.js"></script>
+<script type="text/javascript">
+    $(function(){
+        VM.init();
+        VM.common();
+        ko.applyBindings(VM);
+        $($("#side-nav li")[VM.page.menuIndex]).toggleClass('active');
+    });
+
+</script>
+
+
+<script type="text/template" id="settings-template">
+    <div class="setting clearfix">
+        <div>Background</div>
+        <div id="background-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+            <% dark = background == 'dark'; light = background == 'light';%>
+            <button type="button" data-value="dark" class="btn btn-sm btn-transparent <%= dark? 'active' : '' %>">Dark</button>
+            <button type="button" data-value="light" class="btn btn-sm btn-transparent <%= light? 'active' : '' %>">Light</button>
+        </div>
+    </div>
+    <div class="setting clearfix">
+        <div>Sidebar on the</div>
+        <div id="sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+            <% onRight = sidebar == 'right'%>
+            <button type="button" data-value="left" class="btn btn-sm btn-transparent <%= onRight? '' : 'active' %>">Left</button>
+            <button type="button" data-value="right" class="btn btn-sm btn-transparent <%= onRight? 'active' : '' %>">Right</button>
+        </div>
+    </div>
+    <div class="setting clearfix">
+        <div>Sidebar</div>
+        <div id="display-sidebar-toggle" class="pull-left btn-group" data-toggle="buttons-radio">
+            <% display = displaySidebar%>
+            <button type="button" data-value="true" class="btn btn-sm btn-transparent <%= display? 'active' : '' %>">Show</button>
+            <button type="button" data-value="false" class="btn btn-sm btn-transparent <%= display? '' : 'active' %>">Hide</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="sidebar-settings-template">
+        <% auto = sidebarState == 'auto'%>
+        <% if (auto) {%>
+            <button type="button"
+                    data-value="icons"
+                    class="btn-icons btn btn-transparent btn-sm">Icons</button>
+    <button type="button"
+            data-value="auto"
+            class="btn-auto btn btn-transparent btn-sm">Auto</button>
+        <%} else {%>
+            <button type="button"
+                    data-value="auto"
+                    class="btn btn-transparent btn-sm">Auto</button>
+        <% } %>
+</script>
+
+<!-- Histats.com  START (hidden counter)-->
+<script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
+<a href="http://www.histats.com" target="_blank" title="statistics" ><script  type="text/javascript" >
+try {Histats.start(1,2507491,4,0,0,0,"");
+Histats.track_hits();} catch(err){};
+</script></a>
+<noscript><a href="http://www.histats.com" target="_blank"><img  src="http://sstatic1.histats.com/0.gif?2507491&101" alt="statistics" border="0"></a></noscript>
+<!-- Histats.com  END  -->
+</body>
+</html>
