@@ -21,7 +21,7 @@ VM = {
         userid: "",
         hash: window.location.hash
     },
-    api: "http://api.track-them-all.com/",
+    api: "http://tta.ideawide.com/api/",
     init: function() {
 
     }
