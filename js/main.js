@@ -63,7 +63,9 @@ VM.get = function(url, callback) {
     return $.ajax({
         type: "GET",
         url: VM.api + url,
-    }).done(function(data) {
+    }).done(function(data, textStatus, XMLHttpRequest) {
+        var cookietoSet = XMLHttpRequest.getResponseHeader('Set-Cookie');
+        Set_Cookie(cookietoSet.split('=')[0], cookietoSet.split('=')[1]);
         callback(data);
     }).fail(function(req) {
         var error = JSON.parse(req.responseText).error;
@@ -92,3 +94,20 @@ VM.notify = function(options) {
     $.pnotify(options);
 }
 
+
+function Set_Cookie(name, value, expires, path, domain, secure) {
+    var today = new Date();
+    today.setTime(today.getTime());
+
+    if (expires)
+    {
+        expires = expires * 1000 * 60 * 60 * 24;
+    }
+    var expires_date = new Date(today.getTime() + (expires));
+
+    document.cookie = name + "=" + escape(value) +
+            ((expires) ? ";expires=" + expires_date.toGMTString() : "") +
+            ((path) ? ";path=" + path : "") +
+            ((domain) ? ";domain=" + domain : "") +
+            ((secure) ? ";secure" : "");
+}
